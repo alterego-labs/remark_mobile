@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "react": "^0.14.8",
-    "react-native": "^0.24.1"
+    "react-native": "^0.24.1",
+    "remark-api-client-node": "alterego-labs/remark-api-client-node#29c52a6c7d414c99da8ed8990112d286f091e57d"
   }
 }

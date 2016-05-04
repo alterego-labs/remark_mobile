@@ -8,7 +8,24 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
+import { AuthApiGateway } from 'remark-api-client-node';
+
 export default class Login extends Component {
+  onContinueClick() {
+    console.log('continue clicked');
+    AuthApiGateway.login({ user: { login: "m32dm23mz232m323ze23" } }).then((response) => {
+      console.log(response);
+      return response;
+    }).then((response) => {
+      console.log(response);
+      return response;
+    }).catch(function(ex) {
+      console.log(ex);
+      return ex.response;
+    });
+
+  }
+
   render() {
     return (
       <View style={styles.topContainer}>
@@ -24,7 +41,7 @@ export default class Login extends Component {
               underlineColorAndroid="transparent"
             />
           </View>
-          <TouchableHighlight style={ styles.continueBtn }>
+          <TouchableHighlight style={ styles.continueBtn } onPress={ this.onContinueClick }>
             <Text style={ styles.continueBtnText }>Continue</Text>
           </TouchableHighlight>
         </View>
