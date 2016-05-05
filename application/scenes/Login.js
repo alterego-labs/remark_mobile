@@ -5,16 +5,23 @@ import React, {
   Text,
   View,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  AsyncStorage
 } from 'react-native';
 
 import { AuthApiGateway } from 'remark-api-client-node';
 
 export default class Login extends Component {
   onContinueClick() {
+    this._storeLogin(this.state.login).done();
     this.props.navigator.push({
       name: 'RemarksList'
     });
+  }
+
+  async _storeLogin(login) {
+    console.log("Setted value is " + login);
+    await AsyncStorage.setItem("remark_app_login", login);
   }
 
   render() {
@@ -26,10 +33,12 @@ export default class Login extends Component {
         <View style={ styles.formContainer }>
           <View style={ {backgroundColor: '#fff', marginLeft: 10, marginRight: 10, marginBottom: 10} }>
             <TextInput
+              ref="login"
               style={ styles.loginField }
               placeholder="Enter your nickname"
               placeholderTextColor="#bababa"
               underlineColorAndroid="transparent"
+              onChangeText={ (text) => this.setState({login: text}) }
             />
           </View>
           <TouchableHighlight style={ styles.continueBtn } onPress={ this.onContinueClick.bind(this) }>
