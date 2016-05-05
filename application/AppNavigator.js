@@ -4,6 +4,7 @@ import React, {
 } from 'react-native';
 
 import Login from './scenes/Login';
+import RemarksList from './scenes/RemarksList';
 
 export default class AppNavigator extends Component {
   renderScene(route, navigator) {
@@ -11,6 +12,9 @@ export default class AppNavigator extends Component {
     switch (route.name) {
       case 'Login':
         scene = <Login navigator={ navigator }/>;
+        break;
+      case 'RemarksList':
+        scene = <RemarksList navigator={ navigator }/>;
         break;
     }
     return scene;
