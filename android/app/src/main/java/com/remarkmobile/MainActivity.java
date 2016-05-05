@@ -6,6 +6,8 @@ import com.facebook.react.shell.MainReactPackage;
 
 import java.util.Arrays;
 import java.util.List;
+import com.oney.gcm.GcmPackage;                             // <- Add this line
+import io.neson.react.notification.NotificationPackage;     // <- Add this line
 
 public class MainActivity extends ReactActivity {
 
@@ -34,7 +36,9 @@ public class MainActivity extends ReactActivity {
     @Override
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
-            new MainReactPackage()
+            new MainReactPackage(),
+            new GcmPackage(),
+            new NotificationPackage(this)
         );
     }
 }

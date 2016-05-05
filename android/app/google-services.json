@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "88071336489",
+    "project_id": "remarkapp-95ab"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88071336489:android:0803deee92f44101",
+        "android_client_info": {
+          "package_name": "com.remarkmobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAp0MJ4aTJs1-GiCMch0dMMoN3R5XRtIoc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
