@@ -52,7 +52,7 @@ class Login extends Component {
   _renderMain() {
     if (this.state.viewState == 'loading') {
       return (
-        <Image source={ require('../images/loader.gif') }/>
+        <Image source={ require('../images/loader_login.gif') }/>
       );
     } else {
       return (
