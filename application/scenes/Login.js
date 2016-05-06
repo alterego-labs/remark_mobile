@@ -6,7 +6,8 @@ import React, {
   View,
   TextInput,
   TouchableHighlight,
-  AsyncStorage
+  AsyncStorage,
+  Image
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -33,19 +34,7 @@ class Login extends Component {
           <Text style={ styles.name }>REMARK</Text>
         </View>
         <View style={ styles.formContainer }>
-          <View style={ {backgroundColor: '#fff', marginLeft: 10, marginRight: 10, marginBottom: 10} }>
-            <TextInput
-              ref="login"
-              style={ styles.loginField }
-              placeholder="Enter your nickname"
-              placeholderTextColor="#bababa"
-              underlineColorAndroid="transparent"
-              onChangeText={ (text) => this.setState({login: text}) }
-            />
-          </View>
-          <TouchableHighlight style={ styles.continueBtn } onPress={ this.onContinueClick.bind(this) }>
-            <Text style={ styles.continueBtnText }>Continue</Text>
-          </TouchableHighlight>
+          <Image source={ require('../images/loader.gif') }/>
         </View>
         <Text style={ styles.copyright }>AlterEGO Labs, 2016</Text>
       </View>
@@ -121,8 +110,9 @@ Login.defaultProps = {
 };
 
 function mapStateToProps (state) {
+  console.log(state);
   return {
-    currentUser: state.get('auth').user,
+    currentUser: state.auth.user,
   };
 }
 
