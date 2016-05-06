@@ -1,4 +1,7 @@
-import { RECEIVE_ACCESS_TOKEN, RECEIVE_PUSH_TOKEN } from '../actions/Auth';
+import {
+  RECEIVE_ACCESS_TOKEN, RECEIVE_PUSH_TOKEN, PROCESS_LOGOUT
+} from '../actions/Auth';
+
 import { Map } from 'immutable';
 
 function wrap (login) {
@@ -17,6 +20,8 @@ const Auth = (state = defaultState, action) => {
       return state.set('user', wrap(action.accessToken));
     case RECEIVE_PUSH_TOKEN:
       return state.set('pushToken', action.pushToken);
+    case PROCESS_LOGOUT:
+      return defaultState;
     default:
       return state;
   }

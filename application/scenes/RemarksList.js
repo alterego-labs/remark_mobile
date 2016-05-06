@@ -9,6 +9,9 @@ import React, {
   AsyncStorage
 } from 'react-native';
 
+import Store, { dispatch } from '../Store';
+import { processLogout } from '../actions/Auth';
+
 export default class RemarksList extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +31,7 @@ export default class RemarksList extends Component {
   _onLogoutClick() {
     var comp = this;
     AsyncStorage.removeItem('remark_app_login', () => {
+      Store.dispatch(processLogout());
       comp.props.navigator.push({ name: 'Login' });
     });
   }

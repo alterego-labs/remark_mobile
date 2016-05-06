@@ -14,6 +14,9 @@ import { connect } from 'react-redux';
 import { AuthApiGateway } from 'remark-api-client-node';
 import { Map } from 'immutable';
 
+import Store, { dispatch } from '../Store';
+import { receiveAccessToken } from '../actions/Auth';
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +32,7 @@ class Login extends Component {
 
   async _storeLogin(login) {
     console.log("Setted value is " + login);
+    Store.dispatch(receiveAccessToken({ accessToken: login }));
     await AsyncStorage.setItem("remark_app_login", login);
   }
 
