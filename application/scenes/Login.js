@@ -15,6 +15,11 @@ import { AuthApiGateway } from 'remark-api-client-node';
 import { Map } from 'immutable';
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { viewState: 'loading' };
+  }
+
   onContinueClick() {
     this._storeLogin(this.state.login).done();
     this.props.navigator.push({
@@ -27,6 +32,40 @@ class Login extends Component {
     await AsyncStorage.setItem("remark_app_login", login);
   }
 
+  componentDidMount() {
+    var comp = this;
+    setTimeout(() => {
+      console.log('Change!');
+      comp.setState({ viewState: 'form' });
+    }, 4000);
+  }
+
+  _renderMain() {
+    if (this.state.viewState == 'loading') {
+      return (
+        <Image source={ require('../images/loader.gif') }/>
+      );
+    } else {
+      return (
+        <View>
+          <View style={ {backgroundColor: '#fff', marginLeft: 10, marginRight: 10, marginBottom: 10} }>
+            <TextInput
+              ref="login"
+              style={ styles.loginField }
+              placeholder="Enter your nickname"
+              placeholderTextColor="#bababa"
+              underlineColorAndroid="transparent"
+              onChangeText={ (text) => this.setState({login: text}) }
+            />
+          </View>
+          <TouchableHighlight style={ styles.continueBtn } onPress={ this.onContinueClick.bind(this) }>
+            <Text style={ styles.continueBtnText }>Continue</Text>
+          </TouchableHighlight>
+        </View>
+      );
+    }
+  }
+
   render() {
     return (
       <View style={styles.topContainer}>
@@ -34,7 +73,7 @@ class Login extends Component {
           <Text style={ styles.name }>REMARK</Text>
         </View>
         <View style={ styles.formContainer }>
-          <Image source={ require('../images/loader.gif') }/>
+          { this._renderMain() }
         </View>
         <Text style={ styles.copyright }>AlterEGO Labs, 2016</Text>
       </View>
@@ -102,7 +141,7 @@ const styles = StyleSheet.create({
 });
 
 Login.propTypes = {
-  currentUser: React.PropTypes.object.isRequired,
+  currentUser: React.PropTypes.object.isRequired
 };
 
 Login.defaultProps = {
@@ -110,7 +149,6 @@ Login.defaultProps = {
 };
 
 function mapStateToProps (state) {
-  console.log(state);
   return {
     currentUser: state.auth.user,
   };
