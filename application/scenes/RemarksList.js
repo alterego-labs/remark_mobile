@@ -25,9 +25,24 @@ export default class RemarksList extends Component {
     this.setState({login: value});
   }
 
-  renderLogin () {
+  _onLogoutClick() {
+    var comp = this;
+    AsyncStorage.removeItem('remark_app_login', () => {
+      comp.props.navigator.push({ name: 'Login' });
+    });
+  }
+
+  renderLogin() {
     return (
       <Text>{ this.state.login }</Text>
+    );
+  }
+
+  renderLogout() {
+    return (
+      <TouchableHighlight onPress={ this._onLogoutClick.bind(this) }>
+        <Text>Logout</Text>
+      </TouchableHighlight>
     );
   }
 
@@ -36,6 +51,7 @@ export default class RemarksList extends Component {
       <View>
         <Text>Remarks List</Text>
         { this.renderLogin() }
+        { this.renderLogout() }
       </View>
     );
   }

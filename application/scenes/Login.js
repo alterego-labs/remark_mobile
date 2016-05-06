@@ -34,10 +34,15 @@ class Login extends Component {
 
   componentDidMount() {
     var comp = this;
-    setTimeout(() => {
-      console.log('Change!');
-      comp.setState({ viewState: 'form' });
-    }, 4000);
+    AsyncStorage.getItem("remark_app_login", (err, result) => {
+      if (result) {
+        comp.props.navigator.push({
+          name: 'RemarksList'
+        });
+      } else {
+        this.setState({ viewState: 'form' });
+      }
+    });
   }
 
   _renderMain() {
