@@ -9,9 +9,11 @@ import React, {
   AsyncStorage
 } from 'react-native';
 
+import { connect } from 'react-redux';
 import { AuthApiGateway } from 'remark-api-client-node';
+import { Map } from 'immutable';
 
-export default class Login extends Component {
+class Login extends Component {
   onContinueClick() {
     this._storeLogin(this.state.login).done();
     this.props.navigator.push({
@@ -109,3 +111,19 @@ const styles = StyleSheet.create({
     fontSize: 12
   }
 });
+
+Login.propTypes = {
+  currentUser: React.PropTypes.object.isRequired,
+};
+
+Login.defaultProps = {
+  currentUser: {}
+};
+
+function mapStateToProps (state) {
+  return {
+    currentUser: state.get('auth').user,
+  };
+}
+
+export default connect(mapStateToProps)(Login);

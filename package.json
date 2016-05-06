@@ -11,6 +11,9 @@
     "remark-api-client-node": "alterego-labs/remark-api-client-node#29c52a6c7d414c99da8ed8990112d286f091e57d",
     "react-native-gcm-android": "^0.2.0",
     "react-native-router-flux": "^3.22.23",
-    "react-native-system-notification": "^0.1.9"
+    "react-native-system-notification": "^0.1.9",
+    "immutable": "^3.8.1",
+    "react-redux": "^4.4.5",
+    "redux": "^3.4.0"
   }
 }

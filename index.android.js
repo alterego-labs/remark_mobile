@@ -6,6 +6,11 @@ import React, {
 
 import AppNavigator from './application/AppNavigator'
 
+import { Provider } from 'react-redux'
+import Store from './application/Store';
+
+import { receivePushToken } from './application/actions/Auth';
+
 var GcmAndroid = require('react-native-gcm-android');
 import Notification from 'react-native-system-notification';
 
@@ -13,6 +18,7 @@ class RemarkMobile extends Component {
   componentDidMount() {
     GcmAndroid.addEventListener('register', (token) => {
       console.log('send gcm token to server', token);
+      receivePushToken({ pushToken: token });
     });
     GcmAndroid.addEventListener('notification', (notification) => {
       console.log('receive gcm notification', notification);
@@ -27,7 +33,9 @@ class RemarkMobile extends Component {
 
   render() {
     return (
-      <AppNavigator />
+      <Provider store={ Store }>
+        <AppNavigator />
+      </Provider>
     );
   }
 }
