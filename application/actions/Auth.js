@@ -7,7 +7,7 @@ export const PROCESS_LOGOUT = 'PROCESS_LOGOUT';
 export function receiveAccessToken (opts) {
   return {
     type: RECEIVE_ACCESS_TOKEN,
-    accessToken: opts.login,
+    accessToken: opts.accessToken,
     login: opts.login
   }
 }

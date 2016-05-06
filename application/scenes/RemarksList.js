@@ -9,25 +9,11 @@ import React, {
   AsyncStorage
 } from 'react-native';
 
+import { connect } from 'react-redux';
 import Store, { dispatch } from '../Store';
 import { processLogout } from '../actions/Auth';
 
 export default class RemarksList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {login: null};
-  }
-
-  componentDidMount() {
-    this._loadLogin().done();
-  }
-
-  async _loadLogin() {
-    var value = await AsyncStorage.getItem("remark_app_login");
-    console.log("Current value is " + value);
-    this.setState({login: value});
-  }
-
   _onLogoutClick() {
     var comp = this;
     AsyncStorage.removeItem('remark_app_login', () => {
@@ -38,7 +24,7 @@ export default class RemarksList extends Component {
 
   renderLogin() {
     return (
-      <Text>{ this.state.login }</Text>
+      <Text>{ this.props.currentUser.login }</Text>
     );
   }
 
@@ -60,3 +46,19 @@ export default class RemarksList extends Component {
     );
   }
 }
+
+RemarksList.propTypes = {
+  currentUser: React.PropTypes.object.isRequired
+};
+
+RemarksList.defaultProps = {
+  currentUser: { loggedIn: false, login: undefined, accessToken: undefined }
+};
+
+function mapStateToProps (state) {
+  return {
+    currentUser: state.auth.get('user'),
+  };
+}
+
+export default connect(mapStateToProps)(RemarksList);

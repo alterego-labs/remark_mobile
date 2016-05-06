@@ -32,7 +32,7 @@ class Login extends Component {
 
   async _storeLogin(login) {
     console.log("Setted value is " + login);
-    Store.dispatch(receiveAccessToken({ accessToken: login }));
+    Store.dispatch(receiveAccessToken({ accessToken: login, login: login }));
     await AsyncStorage.setItem("remark_app_login", login);
   }
 
@@ -159,7 +159,7 @@ Login.defaultProps = {
 
 function mapStateToProps (state) {
   return {
-    currentUser: state.auth.user,
+    currentUser: state.auth.get('user'),
   };
 }
 
