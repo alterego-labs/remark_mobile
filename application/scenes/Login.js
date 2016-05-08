@@ -34,7 +34,6 @@ class Login extends Component {
     }).catch(function(ex) {
       return ex.response.json();
     }).then((response) => {
-      console.log('Response is ' + response);
       this.setState({ errors: response.data.errors, viewState: 'form' });
       return response;
     });
@@ -67,8 +66,8 @@ class Login extends Component {
   }
 
   _mapErrors() {
-    return this.state.errors.map(error_msg => {
-      return (<Text style={ styles.errorItem }>{ error_msg }</Text>);
+    return this.state.errors.map((error_msg, i) => {
+      return (<Text key={i} style={ styles.errorItem }>{ error_msg }</Text>);
     });
   }
 
