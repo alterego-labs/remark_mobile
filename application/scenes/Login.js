@@ -107,13 +107,13 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.topContainer}>
-      <View style={ styles.logoContainer }>
-      <Text style={ styles.name }>REMARK</Text>
-      </View>
-      <View style={ styles.formContainer }>
-      { this._renderMain() }
-      </View>
-      <Text style={ styles.copyright }>AlterEGO Labs, 2016</Text>
+        <View style={ styles.logoContainer }>
+          <Text style={ styles.name }>REMARK</Text>
+        </View>
+        <View style={ styles.formContainer }>
+          { this._renderMain() }
+        </View>
+        <Text style={ styles.copyright }>AlterEGO Labs, 2016</Text>
       </View>
     );
   }
