@@ -20,33 +20,86 @@ import { receiveAccessToken } from '../actions/Auth';
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { viewState: 'loading' };
+    this.state = { viewState: 'loading', login: null, errors: [] };
   }
 
-  onContinueClick() {
-    this._storeLogin(this.state.login).done();
-    this.props.navigator.push({
-      name: 'RemarksList'
+  onContinueClick(event) {
+    this.setState({ viewState: 'loading' });
+    let comp = this;
+    let enteredLogin = this.state.login;
+    AuthApiGateway.login({ user: { login: enteredLogin } }).then((response) => {
+      comp._storeLogin(response.data.user).done();
+      comp._goToRemarksList();
+      return response;
+    }).catch(function(ex) {
+      return ex.response.json();
+    }).then((response) => {
+      console.log('Response is ' + response);
+      this.setState({ errors: response.data.errors, viewState: 'form' });
+      return response;
     });
+
+    event.preventDefault();
+    return false;
   }
 
-  async _storeLogin(login) {
+  async _storeLogin(user) {
     console.log("Setted value is " + login);
-    Store.dispatch(receiveAccessToken({ accessToken: login, login: login }));
-    await AsyncStorage.setItem("remark_app_login", login);
+    Store.dispatch(receiveAccessToken({ accessToken: user.login, login: user.login }));
+    await AsyncStorage.setItem("remark_app_login", user.login);
   }
 
   componentDidMount() {
     var comp = this;
     AsyncStorage.getItem("remark_app_login", (err, result) => {
       if (result) {
-        comp.props.navigator.push({
-          name: 'RemarksList'
-        });
+        comp._goToRemarksList();
       } else {
         this.setState({ viewState: 'form' });
       }
     });
+  }
+
+  _goToRemarksList() {
+    this.props.navigator.push({
+      name: 'RemarksList'
+    });
+  }
+
+  _mapErrors() {
+    return this.state.errors.map(error_msg => {
+      return (<Text style={ styles.errorItem }>{ error_msg }</Text>);
+    });
+  }
+
+  _renderErrors() {
+    if (this.state.errors.length == 0) return null;
+    return (
+      <View>
+        { this._mapErrors() }
+      </View>
+    );
+  }
+
+  _renderForm() {
+    return (
+      <View>
+        <View style={ {backgroundColor: '#fff', marginLeft: 10, marginRight: 10, marginBottom: 10} }>
+          <TextInput
+            ref="login"
+            style={ styles.loginField }
+            placeholder="Enter your nickname"
+            placeholderTextColor="#bababa"
+            underlineColorAndroid="transparent"
+            onChangeText={ (text) => this.setState({login: text}) }
+          />
+        </View>
+        <TouchableHighlight style={ styles.continueBtn } onPress={ event => this.onContinueClick(event) }>
+          <Text style={ styles.continueBtnText }>Continue</Text>
+        </TouchableHighlight>
+        { this._renderErrors() }
+      </View>
+    );
   }
 
   _renderMain() {
@@ -55,36 +108,20 @@ class Login extends Component {
         <Image source={ require('../images/loader_login.gif') }/>
       );
     } else {
-      return (
-        <View>
-          <View style={ {backgroundColor: '#fff', marginLeft: 10, marginRight: 10, marginBottom: 10} }>
-            <TextInput
-              ref="login"
-              style={ styles.loginField }
-              placeholder="Enter your nickname"
-              placeholderTextColor="#bababa"
-              underlineColorAndroid="transparent"
-              onChangeText={ (text) => this.setState({login: text}) }
-            />
-          </View>
-          <TouchableHighlight style={ styles.continueBtn } onPress={ this.onContinueClick.bind(this) }>
-            <Text style={ styles.continueBtnText }>Continue</Text>
-          </TouchableHighlight>
-        </View>
-      );
+      return this._renderForm();
     }
   }
 
   render() {
     return (
       <View style={styles.topContainer}>
-        <View style={ styles.logoContainer }>
-          <Text style={ styles.name }>REMARK</Text>
-        </View>
-        <View style={ styles.formContainer }>
-          { this._renderMain() }
-        </View>
-        <Text style={ styles.copyright }>AlterEGO Labs, 2016</Text>
+      <View style={ styles.logoContainer }>
+      <Text style={ styles.name }>REMARK</Text>
+      </View>
+      <View style={ styles.formContainer }>
+      { this._renderMain() }
+      </View>
+      <Text style={ styles.copyright }>AlterEGO Labs, 2016</Text>
       </View>
     );
   }
@@ -146,6 +183,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'OpenSans-Semibold',
     fontSize: 12
+  },
+  errorItem: {
+    alignSelf: 'center',
+    color: '#A92323'
   }
 });
 
