@@ -17,6 +17,8 @@ import { Map } from 'immutable';
 import Store, { dispatch } from '../Store';
 import { receiveAccessToken } from '../actions/Auth';
 
+import LoginErrors from './shared/LoginErrors';
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -65,19 +67,9 @@ class Login extends Component {
     });
   }
 
-  _mapErrors() {
-    return this.state.errors.map((error_msg, i) => {
-      return (<Text key={i} style={ styles.errorItem }>{ error_msg }</Text>);
-    });
-  }
-
   _renderErrors() {
-    if (!this.state.errors) return null;
-    if (this.state.errors.length == 0) return null;
     return (
-      <View>
-        { this._mapErrors() }
-      </View>
+      <LoginErrors errors={ this.state.errors || [] }>
     );
   }
 
@@ -183,10 +175,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'OpenSans-Semibold',
     fontSize: 12
-  },
-  errorItem: {
-    alignSelf: 'center',
-    color: '#A92323'
   }
 });
 
