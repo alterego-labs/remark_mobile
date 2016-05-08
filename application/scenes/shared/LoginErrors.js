@@ -1,6 +1,8 @@
 import React, {
   Component,
-  Text
+  Text,
+  StyleSheet,
+  View
 } from 'react-native';
 
 class LoginErrors extends Component {
@@ -21,6 +23,10 @@ class LoginErrors extends Component {
 }
 
 const styles = StyleSheet.create({
+  errorItem: {
+    alignSelf: 'center',
+    color: '#A92323'
+  }
 });
 
 LoginErrors.propTypes = {

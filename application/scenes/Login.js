@@ -11,7 +11,7 @@ import React, {
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import { AuthApiGateway } from 'remark-api-client-node';
+import AuthService from '../utils/AuthService';
 import { Map } from 'immutable';
 
 import Store, { dispatch } from '../Store';
@@ -29,16 +29,16 @@ class Login extends Component {
     this.setState({ viewState: 'loading', errors: [] });
     let comp = this;
     let enteredLogin = this.state.login;
-    AuthApiGateway.login({ user: { login: enteredLogin } }).then((response) => {
-      comp._storeLogin(response.data.user).done();
-      comp._goToRemarksList();
-      return response;
-    }).catch(function(ex) {
-      return ex.response.json();
-    }).then((response) => {
-      this.setState({ errors: response.data.errors, viewState: 'form' });
-      return response;
-    });
+    AuthService.doLogin(
+      { login: enteredLogin },
+      (data) => {
+        comp._storeLogin(data.user).done();
+        comp._goToRemarksList();
+      },
+      (data) => {
+        comp.setState({ errors: data.errors, viewState: 'form' });
+      }
+    );
 
     event.preventDefault();
     return false;
@@ -69,7 +69,7 @@ class Login extends Component {
 
   _renderErrors() {
     return (
-      <LoginErrors errors={ this.state.errors || [] }>
+      <LoginErrors errors={ this.state.errors || [] }/>
     );
   }
 
