@@ -24,7 +24,7 @@ class Login extends Component {
   }
 
   onContinueClick(event) {
-    this.setState({ viewState: 'loading' });
+    this.setState({ viewState: 'loading', errors: [] });
     let comp = this;
     let enteredLogin = this.state.login;
     AuthApiGateway.login({ user: { login: enteredLogin } }).then((response) => {
@@ -43,7 +43,7 @@ class Login extends Component {
   }
 
   async _storeLogin(user) {
-    console.log("Setted value is " + login);
+    console.log("Setted value is " + user.login);
     Store.dispatch(receiveAccessToken({ accessToken: user.login, login: user.login }));
     await AsyncStorage.setItem("remark_app_login", user.login);
   }
@@ -72,6 +72,7 @@ class Login extends Component {
   }
 
   _renderErrors() {
+    if (!this.state.errors) return null;
     if (this.state.errors.length == 0) return null;
     return (
       <View>
