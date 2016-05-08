@@ -62,7 +62,7 @@ class Login extends Component {
   }
 
   _goToRemarksList() {
-    this.props.navigator.push({
+    this.props.navigator.replace({
       name: 'RemarksList'
     });
   }

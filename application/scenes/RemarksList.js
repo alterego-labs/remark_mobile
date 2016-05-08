@@ -18,7 +18,7 @@ export default class RemarksList extends Component {
     var comp = this;
     AsyncStorage.removeItem('remark_app_login', () => {
       Store.dispatch(processLogout());
-      comp.props.navigator.push({ name: 'Login' });
+      comp.props.navigator.replace({ name: 'Login' });
     });
   }
 
