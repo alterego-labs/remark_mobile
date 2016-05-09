@@ -11,7 +11,8 @@ class AuthService {
    *   (data) => { console.log("Failure((("); }
    * )
    *
-   * @param {object} opts - Object which contains login params.
+   * @param {Object} opts - Options for request
+   * @param {string} opts.login - A login of an user
    * @param {function} successCallback
    * @param {function} failureCallback
    * @returns {undefined}
@@ -23,7 +24,7 @@ class AuthService {
     }).catch(function(ex) {
       return ex.response.json();
     }).then((response) => {
-      failureCallback(response.data)
+      failureCallback(response.data);
       return response;
     });
   }

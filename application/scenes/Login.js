@@ -11,7 +11,7 @@ import React, {
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import AuthService from '../utils/AuthService';
+import AuthService from '../utils/remark_api/AuthService';
 import { Map } from 'immutable';
 
 import Store, { dispatch } from '../Store';
@@ -36,6 +36,7 @@ class Login extends Component {
         comp._goToRemarksList();
       },
       (data) => {
+        console.log('Failure is called as well...');
         comp.setState({ errors: data.errors, viewState: 'form' });
       }
     );
@@ -54,6 +55,7 @@ class Login extends Component {
     var comp = this;
     AsyncStorage.getItem("remark_app_login", (err, result) => {
       if (result) {
+        // TODO: Store current user info in the redux store
         comp._goToRemarksList();
       } else {
         this.setState({ viewState: 'form' });
@@ -178,18 +180,4 @@ const styles = StyleSheet.create({
   }
 });
 
-Login.propTypes = {
-  currentUser: React.PropTypes.object.isRequired
-};
-
-Login.defaultProps = {
-  currentUser: {}
-};
-
-function mapStateToProps (state) {
-  return {
-    currentUser: state.auth.get('user'),
-  };
-}
-
-export default connect(mapStateToProps)(Login);
+export default Login;

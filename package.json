@@ -8,7 +8,7 @@
   "dependencies": {
     "react": "^0.14.8",
     "react-native": "^0.24.1",
-    "remark-api-client-node": "alterego-labs/remark-api-client-node#a09c9b1d6f3535f5646ed5b623c882eed65a2a34",
+    "remark-api-client-node": "alterego-labs/remark-api-client-node#bc8d8c7d79a2cf37e3aa8132e3ab28206bd45f31",
     "react-native-gcm-android": "^0.2.0",
     "react-native-router-flux": "^3.22.23",
     "react-native-system-notification": "^0.1.9",
