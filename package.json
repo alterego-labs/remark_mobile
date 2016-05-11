@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "reactotron": "node_modules/.bin/reactotron"
   },
   "dependencies": {
     "immutable": "^3.8.1",
@@ -15,5 +16,8 @@
     "react-redux": "^4.4.5",
     "redux": "^3.4.0",
     "remark-api-client-node": "alterego-labs/remark-api-client-node#d5193f3add8c3fa2510d641307b86268095e4676"
+  },
+  "devDependencies": {
+    "reactotron": "^0.6.1"
   }
 }
