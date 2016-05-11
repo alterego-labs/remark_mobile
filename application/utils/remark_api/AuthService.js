@@ -18,15 +18,14 @@ class AuthService {
    * @returns {undefined}
    */
   static doLogin(opts, successCallback, failureCallback){
-    AuthApiGateway.login({ user: { login: opts.login } }).then((response) => {
-      successCallback(response.data);
-      return response;
-    }).catch(function(ex) {
-      return ex.response.json();
-    }).then((response) => {
-      failureCallback(response.data);
-      return response;
-    });
+    AuthApiGateway.login({ login: opts.login })
+      .then((response) => {
+        console.log('Success response');
+        successCallback(response.data);
+      }).catch(function(error) {
+        var response_json = error.response;
+        failureCallback(response_json.data);
+      });
   }
 }
 
