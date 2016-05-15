@@ -15,7 +15,7 @@
     "react-native-system-notification": "^0.1.9",
     "react-redux": "^4.4.5",
     "redux": "^3.4.0",
-    "remark-api-client-node": "alterego-labs/remark-api-client-node#d5193f3add8c3fa2510d641307b86268095e4676"
+    "remark-api-client-node": "alterego-labs/remark-api-client-node#a2796c7aec4358055d6ab79f3e7e53a0400d1eac"
   },
   "devDependencies": {
     "reactotron": "^0.6.1"
