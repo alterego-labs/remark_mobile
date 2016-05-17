@@ -13,6 +13,8 @@ import { connect } from 'react-redux';
 import Store, { dispatch } from '../Store';
 import { processLogout } from '../actions/Auth';
 
+import RemarksListLayout from '../layouts/RemarksListLayout';
+
 export default class RemarksList extends Component {
   _onLogoutClick() {
     var comp = this;
@@ -38,21 +40,20 @@ export default class RemarksList extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Remarks List</Text>
-        { this.renderLogin() }
-        { this.renderLogout() }
-      </View>
+      <RemarksListLayout>
+      </RemarksListLayout>
     );
   }
 }
 
 RemarksList.propTypes = {
-  currentUser: React.PropTypes.object.isRequired
+  currentUser: React.PropTypes.object.isRequired,
+  showOnlyCurrentUserRemarks: React.PropTypes.bool.isRequired
 };
 
 RemarksList.defaultProps = {
-  currentUser: { loggedIn: false, login: undefined, accessToken: undefined }
+  currentUser: { loggedIn: false, login: undefined, accessToken: undefined },
+  showOnlyCurrentUserRemarks: false
 };
 
 function mapStateToProps (state) {

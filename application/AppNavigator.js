@@ -13,8 +13,11 @@ export default class AppNavigator extends Component {
       case 'Login':
         scene = <Login navigator={ navigator }/>;
         break;
-      case 'RemarksList':
-        scene = <RemarksList navigator={ navigator }/>;
+      case 'AllRemarksList':
+        scene = <RemarksList navigator={ navigator } showOnlyCurrentUserRemarks={ false }/>;
+        break;
+      case 'MyRemarksList':
+        scene = <RemarksList navigator={ navigator } showOnlyCurrentUserRemarks={ true }/>;
         break;
     }
     return scene;

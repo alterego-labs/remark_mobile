@@ -65,7 +65,7 @@ class Login extends Component {
 
   _goToRemarksList() {
     this.props.navigator.replace({
-      name: 'RemarksList'
+      name: 'AllRemarksList'
     });
   }
 
