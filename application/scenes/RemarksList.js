@@ -40,7 +40,7 @@ export default class RemarksList extends Component {
 
   render() {
     return (
-      <RemarksListLayout>
+      <RemarksListLayout navigator={ this.props.navigator } activeFooterLink={ this.props.showOnlyCurrentUserRemarks ? 'my' : 'home' }>
       </RemarksListLayout>
     );
   }
@@ -58,7 +58,7 @@ RemarksList.defaultProps = {
 
 function mapStateToProps (state) {
   return {
-    currentUser: state.auth.get('user'),
+    currentUser: state.auth.get('user')
   };
 }
 

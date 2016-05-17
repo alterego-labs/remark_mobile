@@ -14,6 +14,14 @@ import { connect } from 'react-redux';
 import Store, { dispatch } from '../Store';
 
 class RemarksListLayout extends Component {
+  _onGoToAllRemarksList() {
+    this.props.navigator.replace({name: 'AllRemarksList'});
+  }
+
+  _onGoToMyRemarksList() {
+    this.props.navigator.replace({name: 'MyRemarksList'});
+  }
+
   render() {
     return (
       <View style={ styles.topContainer }>
@@ -24,15 +32,15 @@ class RemarksListLayout extends Component {
           <Text>body</Text>
         </View>
         <View style={ styles.footer }>
-          <TouchableHighlight style={ [styles.footerButton, styles.footerButtonActive] }>
-            <Text style={ [styles.footerButtonText, styles.footerButtonTextActive] }>Home</Text>
+          <TouchableHighlight onPress={ this._onGoToAllRemarksList.bind(this) } style={ [styles.footerButton, (this.props.activeFooterLink == 'home') && styles.footerButtonActive] }>
+            <Text style={ [styles.footerButtonText, (this.props.activeFooterLink == 'home') && styles.footerButtonTextActive] }>Home</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={ styles.footerButton }>
-            <Text style={ styles.footerButtonText }>My</Text>
+          <TouchableHighlight onPress={ this._onGoToMyRemarksList.bind(this) } style={ [styles.footerButton, (this.props.activeFooterLink == 'my') && styles.footerButtonActive] }>
+            <Text style={ [styles.footerButtonText, (this.props.activeFooterLink == 'my') && styles.footerButtonTextActive] }>My</Text>
           </TouchableHighlight>
         </View>
       </View>
-    )
+    );
   }
 }
 
@@ -85,5 +93,14 @@ const styles = StyleSheet.create({
     color: '#ffffff'
   }
 });
+
+RemarksListLayout.propTypes = {
+  activeFooterLink: React.PropTypes.string.isRequired,
+  navigator: React.PropTypes.object.isRequired
+};
+
+RemarksListLayout.defaultProps = {
+  activeFooterLink: 'home'
+};
 
 export default RemarksListLayout;
