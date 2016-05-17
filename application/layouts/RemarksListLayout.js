@@ -24,7 +24,12 @@ class RemarksListLayout extends Component {
           <Text>body</Text>
         </View>
         <View style={ styles.footer }>
-          <Text>footer</Text>
+          <TouchableHighlight style={ [styles.footerButton, styles.footerButtonActive] }>
+            <Text style={ [styles.footerButtonText, styles.footerButtonTextActive] }>Home</Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={ styles.footerButton }>
+            <Text style={ styles.footerButtonText }>My</Text>
+          </TouchableHighlight>
         </View>
       </View>
     )
@@ -53,11 +58,31 @@ const styles = StyleSheet.create({
     height: 60,
     borderTopColor: '#4589b0',
     borderTopWidth: 1,
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    alignItems: 'stretch'
+    
   },
   headerLogo: {
-    height: 55,
-    width: 40
+    height: 35,
+    width: 20
+  },
+  footerButton: {
+    alignSelf: 'stretch',
+    flex: 1,
+    justifyContent: 'center'
+  },
+  footerButtonActive: {
+    backgroundColor: '#4589b0'
+  },
+  footerButtonText: {
+    fontSize: 20,
+    fontFamily: 'OpenSans-Semibold',
+    alignSelf: 'center',
+    color: '#4589b0'
+  },
+  footerButtonTextActive: {
+    color: '#ffffff'
   }
 });
 
