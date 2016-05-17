@@ -6,7 +6,8 @@ import React, {
   View,
   TextInput,
   TouchableHighlight,
-  AsyncStorage
+  AsyncStorage,
+  Image
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -17,7 +18,7 @@ class RemarksListLayout extends Component {
     return (
       <View style={ styles.topContainer }>
         <View style={ styles.header }>
-          <Text>header</Text>
+          <Image style={ styles.headerLogo } resizeMode='stretch' source={ require('../images/logo.png') }/>
         </View>
         <View style={ styles.body }>
           <Text>body</Text>
@@ -40,7 +41,9 @@ const styles = StyleSheet.create({
     height: 60,
     borderBottomColor: '#4589b0',
     borderBottomWidth: 1,
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   body: {
     alignSelf: 'stretch',
@@ -51,6 +54,10 @@ const styles = StyleSheet.create({
     borderTopColor: '#4589b0',
     borderTopWidth: 1,
     alignSelf: 'stretch'
+  },
+  headerLogo: {
+    height: 55,
+    width: 40
   }
 });
 
