@@ -23,13 +23,17 @@ export default class RemarksList extends Component {
     return RemarksApiGateway.getList(params, this.props.showOnlyCurrentUserRemarks ? this.props.currentUser.login : null);
   }
 
+  _detectActiveFooterLink() {
+    return this.props.showOnlyCurrentUserRemarks ? 'my' : 'home';
+  }
+
   render() {
     return (
       <RemarksListLayout
         remarks={ this.props.remarks }
         onLoad={ (params) => this._onLoadRemarks(params) }
         navigator={ this.props.navigator }
-        activeFooterLink={ this.props.showOnlyCurrentUserRemarks ? 'my' : 'home' }>
+        activeFooterLink={ this._detectActiveFooterLink() }>
       </RemarksListLayout>
     );
   }

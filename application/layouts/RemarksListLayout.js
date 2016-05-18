@@ -14,7 +14,7 @@ import React, {
 import { connect } from 'react-redux';
 import Store, { dispatch } from '../Store';
 
-import { cleanRemarks, loadRemarks } from '../actions/Remarks';
+import { cleanRemarks, loadRemarks, addRemarks } from '../actions/Remarks';
 
 class RemarksListLayout extends Component {
   constructor(props) {
@@ -26,8 +26,6 @@ class RemarksListLayout extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2
       })
     };
-    console.log('CLEAN =>>>>>');
-    Store.dispatch(cleanRemarks());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,14 +35,15 @@ class RemarksListLayout extends Component {
   }
 
   componentDidMount() {
-    this.getItems();
+    this.getItems(true);
   }
 
-  getItems() {
-    this.props.onLoad(this.getParams())
+  getItems(firstLoad) {
+    this.props.onLoad(this.getParams(firstLoad))
       .then((response_json) => {
         const remarks = response_json.data.messages;
-        Store.dispatch(loadRemarks(remarks));
+        const dispatchAction = firstLoad ? loadRemarks : addRemarks
+        Store.dispatch(dispatchAction(remarks));
         this.setState({ loading: false, noMoreRemarks: remarks.length === 0 });
         return response_json;
       }).catch((ex) => {
@@ -52,7 +51,8 @@ class RemarksListLayout extends Component {
       });
   }
 
-  getParams() {
+  getParams(firstLoad) {
+    if (firstLoad) return null;
     let lastItem = this.getLastItem();
     return lastItem ? { last_message_id: lastItem.id } : null;
   }
@@ -64,13 +64,11 @@ class RemarksListLayout extends Component {
 
   _onGoToAllRemarksList() {
     if (this.props.activeFooterLink == 'home') return false;
-    Store.dispatch(cleanRemarks());
     this.props.navigator.replace({name: 'AllRemarksList'});
   }
 
   _onGoToMyRemarksList() {
     if (this.props.activeFooterLink == 'my') return false;
-    Store.dispatch(cleanRemarks());
     this.props.navigator.replace({name: 'MyRemarksList'});
   }
 
