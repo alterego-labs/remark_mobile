@@ -16,6 +16,8 @@ import Store, { dispatch } from '../Store';
 
 import { cleanRemarks, loadRemarks, addRemarks } from '../actions/Remarks';
 
+import RemarkListItem from '../views/remarks/ListItem';
+
 class RemarksListLayout extends Component {
   constructor(props) {
     super(props);
@@ -74,7 +76,7 @@ class RemarksListLayout extends Component {
 
   renderRemark(remark) {
     return (
-      <Text>{ remark.body }</Text>
+      <RemarkListItem remark={ remark }/>
     );
   }
 
