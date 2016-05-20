@@ -31,8 +31,13 @@ class RemarkMobile extends Component {
       console.log('send gcm token to server', token);
       Store.dispatch(receivePushToken({ token: token }));
     });
-    GcmAndroid.addEventListener('notification', (notification) => {
-      console.log('receive gcm notification', notification);
+    GcmAndroid.addEventListener('notification', (evt) => {
+      console.log('receive gcm notification', evt);
+      var notification = JSON.parse(evt.data.notification);
+      Notification.create({
+        subject: notification.subject,
+        message: notification.message.body
+      });
     });
 
     DeviceEventEmitter.addListener('sysNotificationClick', (e) => {
