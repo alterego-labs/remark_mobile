@@ -5,13 +5,19 @@ import React, {
   StyleSheet
 } from 'react-native';
 
+import DateTimeService from '../../utils/DateTimeService';
+
 class ListItem extends Component {
+  _humanCreatedAt() {
+    return DateTimeService.fromNowInWords(this.props.remark.created_at);
+  }
+
   render() {
     return (
       <View style={ styles.remarkRow }>
         <View style={ styles.rowHeaderBlock }>
           <Text style={ styles.userLoginText }>@{ this.props.remark.user.login }</Text>
-          <Text style={ styles.remarkCreatedAtText }>{ this.props.remark.created_at }</Text>
+          <Text style={ styles.remarkCreatedAtText }>{ this._humanCreatedAt() }</Text>
         </View>
         <View>
           <Text style={ styles.remarkBodyText }>{ this.props.remark.body }</Text>
