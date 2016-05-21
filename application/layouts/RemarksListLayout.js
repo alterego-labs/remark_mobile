@@ -93,6 +93,7 @@ class RemarksListLayout extends Component {
       <View style={ styles.topContainer }>
         <View style={ styles.header }>
           <Image style={ styles.headerLogo } resizeMode='stretch' source={ require('../images/logo.png') }/>
+          <Image style={ styles.logoutImg } resizeMode='stretch' source={ require('../images/logout.png') }/>
         </View>
         <View style={ styles.body }>
           <ListView
@@ -128,7 +129,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     alignSelf: 'stretch',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    // flexDirection: 'row'
   },
   body: {
     alignSelf: 'stretch',
@@ -163,6 +165,14 @@ const styles = StyleSheet.create({
   },
   footerButtonTextActive: {
     color: '#ffffff'
+  },
+  logoutImg: {
+    height: 25,
+    width: 25,
+    position: 'absolute',
+    top: 16,
+    right: 5,
+    opacity: 0.5
   }
 });
 
