@@ -80,6 +80,13 @@ class RemarksListLayout extends Component {
     );
   }
 
+  onBottom() {
+    if (this.state.noMoreRemarks || this.state.loading) return false;
+    return this.setState({ loading: true }, () => {
+      this.getItems(false);
+    });
+  }
+
   render() {
     return (
       <View style={ styles.topContainer }>
@@ -90,6 +97,8 @@ class RemarksListLayout extends Component {
           <ListView
             dataSource={ this.state.dataSource }
             renderRow={ this.renderRemark.bind(this) }
+            onEndReached={ event => this.onBottom(event) }
+            onEndReachedThreshold={ 100 }
           />
         </View>
         <View style={ styles.footer }>
