@@ -14,6 +14,7 @@ import React, {
 import { connect } from 'react-redux';
 import Store, { dispatch } from '../Store';
 
+import { processLogout } from '../actions/Auth';
 import { cleanRemarks, loadRemarks, addRemarks } from '../actions/Remarks';
 
 import RemarkListItem from '../views/remarks/ListItem';
@@ -75,6 +76,14 @@ class RemarksListLayout extends Component {
     this.props.navigator.replace({name: 'MyRemarksList'});
   }
 
+  _onLogoutClick() {
+    var comp = this;
+    AsyncStorage.removeItem('remark_app_login', () => {
+      Store.dispatch(processLogout());
+      comp.props.navigator.replace({ name: 'Login' });
+    });
+  }
+
   renderRemark(remark) {
     return (
       <RemarkListItem remark={ remark }/>
@@ -93,6 +102,9 @@ class RemarksListLayout extends Component {
       <View style={ styles.topContainer }>
         <View style={ styles.header }>
           <Image style={ styles.headerLogo } resizeMode='stretch' source={ require('../images/logo.png') }/>
+          <TouchableHighlight onPress={ this._onLogoutClick.bind(this) } style={ styles.logoutTouch }>
+            <Image style={ styles.logoutImg } resizeMode='stretch' source={ require('../images/logout.png') }/>
+          </TouchableHighlight>
         </View>
         <View style={ styles.body }>
           <ListView
@@ -128,7 +140,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     alignSelf: 'stretch',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    // flexDirection: 'row'
   },
   body: {
     alignSelf: 'stretch',
@@ -163,6 +176,16 @@ const styles = StyleSheet.create({
   },
   footerButtonTextActive: {
     color: '#ffffff'
+  },
+  logoutTouch: {
+    position: 'absolute',
+    top: 16,
+    right: 5
+  },
+  logoutImg: {
+    height: 25,
+    width: 25,
+    opacity: 0.5
   }
 });
 
