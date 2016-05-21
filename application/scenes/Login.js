@@ -55,7 +55,7 @@ class Login extends Component {
     var comp = this;
     AsyncStorage.getItem("remark_app_login", (err, result) => {
       if (result) {
-        // TODO: Store current user info in the redux store
+        Store.dispatch(receiveAccessToken({ accessToken: result, login: result }));
         comp._goToRemarksList();
       } else {
         this.setState({ viewState: 'form' });
@@ -65,7 +65,7 @@ class Login extends Component {
 
   _goToRemarksList() {
     this.props.navigator.replace({
-      name: 'RemarksList'
+      name: 'AllRemarksList'
     });
   }
 

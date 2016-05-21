@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
 import Auth from './Auth';
-// import Remarks from './Remarks';
+import Remarks from './Remarks';
 
 export const reducers = combineReducers({
-  auth: Auth //, remarks: Remarks
+  auth: Auth, remarks: Remarks
 });

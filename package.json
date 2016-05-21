@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "immutable": "^3.8.1",
+    "moment": "^2.13.0",
+    "moment-timezone": "^0.5.4",
     "react": "^0.14.8",
     "react-native": "^0.24.1",
     "react-native-gcm-android": "^0.2.0",
@@ -15,7 +17,7 @@
     "react-native-system-notification": "^0.1.9",
     "react-redux": "^4.4.5",
     "redux": "^3.4.0",
-    "remark-api-client-node": "alterego-labs/remark-api-client-node#a2796c7aec4358055d6ab79f3e7e53a0400d1eac"
+    "remark-api-client-node": "alterego-labs/remark-api-client-node#6b7d66b347e3ff7544b6fe4e2a11eaa8e443e83f"
   },
   "devDependencies": {
     "reactotron": "^0.6.1"

@@ -9,55 +9,51 @@ import React, {
   AsyncStorage
 } from 'react-native';
 
+import { List } from 'immutable';
 import { connect } from 'react-redux';
 import Store, { dispatch } from '../Store';
 import { processLogout } from '../actions/Auth';
 
+import RemarksListLayout from '../layouts/RemarksListLayout';
+
+import { RemarksApiGateway } from 'remark-api-client-node';
+
 export default class RemarksList extends Component {
-  _onLogoutClick() {
-    var comp = this;
-    AsyncStorage.removeItem('remark_app_login', () => {
-      Store.dispatch(processLogout());
-      comp.props.navigator.replace({ name: 'Login' });
-    });
+  _onLoadRemarks(params) {
+    return RemarksApiGateway.getList(params, this.props.showOnlyCurrentUserRemarks ? this.props.currentUser.login : null);
   }
 
-  renderLogin() {
-    return (
-      <Text>{ this.props.currentUser.login }</Text>
-    );
-  }
-
-  renderLogout() {
-    return (
-      <TouchableHighlight onPress={ this._onLogoutClick.bind(this) }>
-        <Text>Logout</Text>
-      </TouchableHighlight>
-    );
+  _detectActiveFooterLink() {
+    return this.props.showOnlyCurrentUserRemarks ? 'my' : 'home';
   }
 
   render() {
     return (
-      <View>
-        <Text>Remarks List</Text>
-        { this.renderLogin() }
-        { this.renderLogout() }
-      </View>
+      <RemarksListLayout
+        remarks={ this.props.remarks }
+        onLoad={ (params) => this._onLoadRemarks(params) }
+        navigator={ this.props.navigator }
+        activeFooterLink={ this._detectActiveFooterLink() }>
+      </RemarksListLayout>
     );
   }
 }
 
 RemarksList.propTypes = {
-  currentUser: React.PropTypes.object.isRequired
+  currentUser: React.PropTypes.object.isRequired,
+  showOnlyCurrentUserRemarks: React.PropTypes.bool.isRequired,
 };
 
 RemarksList.defaultProps = {
-  currentUser: { loggedIn: false, login: undefined, accessToken: undefined }
+  currentUser: { loggedIn: false, login: null, accessToken: null },
+  showOnlyCurrentUserRemarks: false,
+  remarks: List([])
 };
 
 function mapStateToProps (state) {
   return {
     currentUser: state.auth.get('user'),
+    remarks: state.remarks
   };
 }
 
