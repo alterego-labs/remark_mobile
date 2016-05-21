@@ -17,6 +17,7 @@ import Store, { dispatch } from '../Store';
 import { cleanRemarks, loadRemarks, addRemarks } from '../actions/Remarks';
 
 import RemarkListItem from '../views/remarks/ListItem';
+import DotsSpinner from '../components/spinners/DotsSpinner';
 
 class RemarksListLayout extends Component {
   constructor(props) {
@@ -100,6 +101,7 @@ class RemarksListLayout extends Component {
             onEndReached={ event => this.onBottom(event) }
             onEndReachedThreshold={ 100 }
           />
+          <DotsSpinner show={ this.state.loading } />
         </View>
         <View style={ styles.footer }>
           <TouchableHighlight onPress={ this._onGoToAllRemarksList.bind(this) } style={ [styles.footerButton, (this.props.activeFooterLink == 'home') && styles.footerButtonActive] }>
