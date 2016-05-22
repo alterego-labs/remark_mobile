@@ -5,6 +5,7 @@ import React, {
 
 import Login from './scenes/Login';
 import RemarksList from './scenes/RemarksList';
+import AddNewRemark from './scenes/AddNewRemark';
 
 export default class AppNavigator extends Component {
   renderScene(route, navigator) {
@@ -18,6 +19,8 @@ export default class AppNavigator extends Component {
         break;
       case 'MyRemarksList':
         scene = <RemarksList navigator={ navigator } showOnlyCurrentUserRemarks={ true }/>;
+      case 'AddNewRemark':
+        scene = <AddNewRemark navigator={ navigator }/>;
         break;
     }
     return scene;
