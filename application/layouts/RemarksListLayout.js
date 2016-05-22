@@ -84,6 +84,9 @@ class RemarksListLayout extends Component {
     });
   }
 
+  _onNewRemarkClick() {
+  }
+
   renderRemark(remark) {
     return (
       <RemarkListItem remark={ remark }/>
@@ -101,6 +104,9 @@ class RemarksListLayout extends Component {
     return (
       <View style={ styles.topContainer }>
         <View style={ styles.header }>
+          <TouchableHighlight onPress={ this._onNewRemarkClick.bind(this) } style={ styles.newRemarkTouch }>
+            <Image style={ styles.newRemarkImg } resizeMode='stretch' source={ require('../images/new_remark.png') }/>
+          </TouchableHighlight>
           <Image style={ styles.headerLogo } resizeMode='stretch' source={ require('../images/logo.png') }/>
           <TouchableHighlight onPress={ this._onLogoutClick.bind(this) } style={ styles.logoutTouch }>
             <Image style={ styles.logoutImg } resizeMode='stretch' source={ require('../images/logout.png') }/>
@@ -181,6 +187,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 16,
     right: 5
+  },
+  newRemarkTouch: {
+    position: 'absolute',
+    top: 16,
+    left: 5
+  },
+  newRemarkImg: {
+    height: 25,
+    width: 25,
+    opacity: 0.5
   },
   logoutImg: {
     height: 25,
