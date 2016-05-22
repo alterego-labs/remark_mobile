@@ -78,18 +78,26 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'test_ulya'
+            keyPassword 'password'
+            storeFile file('/Users/sergio/Work/remark/shared/android_keys/test.jks')
+            storePassword 'password'
+        }
+    }
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
-
+    buildToolsVersion '23.0.3'
     defaultConfig {
         applicationId "com.remarkmobile"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        signingConfig signingConfigs.config
     }
     splits {
         abi {
@@ -103,6 +111,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.config
         }
     }
     // applicationVariants are e.g. debug, release
@@ -110,7 +119,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -118,20 +127,26 @@ android {
             }
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
-    compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
-    compile 'com.google.android.gms:play-services-gcm:8.3.0' // <- Add this line
-    compile project(':RNGcmAndroid')                         // <- Add this line
-    compile project(':react-native-system-notification')     // <- Add this line
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.facebook.react:react-native:+'
+    // From node_modules
+    compile 'com.google.android.gms:play-services-gcm:8.3.0'
+    // <- Add this line
+    compile project(':RNGcmAndroid')
+    // <- Add this line
+    compile project(':react-native-system-notification')
+    // <- Add this line
 }
 
 // Run this once to be able to run the application with BUCK
 // puts all compile dependencies into folder libs for BUCK to use
 task copyDownloadableDepsToLibs(type: Copy) {
-  from configurations.compile
-  into 'libs'
+    from configurations.compile
+    into 'libs'
 }
