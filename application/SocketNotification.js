@@ -2,19 +2,22 @@ import { addRemark } from './actions/Remarks';
 import Store from './Store';
 
 class SocketNotification {
-  static listen() {
-    var socket = new WebSocket('ws://remark-api.alterego-labs.com/ws');
-    socket.onopen = function() {
+  constructor() {
+    this.socket = new WebSocket('ws://remark-api.alterego-labs.com/ws');
+  }
+
+  listen(onMessageFunc) {
+    this.socket.onopen = function() {
       window.console.log('Opened!');
     }
-    socket.onclose = function() {
+    this.socket.onclose = function() {
       window.console.log('Closed!');
     }
-    socket.onmessage = function(event) {
+    this.socket.onmessage = function(event) {
       window.console.log(event.data);
-      Store.dispatch(addRemark( JSON.parse(event.data) ));
+      onMessageFunc( JSON.parse(event.data) );
     }
-    socket.onerror = function(error) {
+    this.socket.onerror = function(error) {
       window.console.log('Error ' + error);
     }
   }

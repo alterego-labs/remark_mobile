@@ -12,7 +12,9 @@ import React, {
 import { List } from 'immutable';
 import { connect } from 'react-redux';
 import Store, { dispatch } from '../Store';
+
 import { processLogout } from '../actions/Auth';
+import { addRemark } from '../actions/Remarks';
 
 import RemarksListLayout from '../layouts/RemarksListLayout';
 
@@ -21,9 +23,17 @@ import { RemarksApiGateway } from 'remark-api-client-node';
 import SocketNotification from '../SocketNotification';
 
 export default class RemarksList extends Component {
+  constructor(props) {
+    super(props);
+    this.socket = new SocketNotification();
+  }
+
   componentDidMount() {
     if(this.props.showOnlyCurrentUserRemarks == false) {
-      SocketNotification.listen();
+      this.socket.listen((new_remark) => {
+        if (this.props.currentUser.login != new_remark.user.login) return;
+        Store.dispatch(addRemark(new_remark));
+      });
     }
   }
 
