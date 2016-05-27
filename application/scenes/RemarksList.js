@@ -29,12 +29,14 @@ export default class RemarksList extends Component {
   }
 
   componentDidMount() {
-    if(this.props.showOnlyCurrentUserRemarks == false) {
-      this.socket.listen((new_remark) => {
-        if (this.props.currentUser.login != new_remark.user.login) return;
-        Store.dispatch(addRemark(new_remark));
-      });
-    }
+    this.socket.listen((new_remark) => {
+      if ((this.props.currentUser.login != new_remark.user.login) && (this.props.showOnlyCurrentUserRemarks == true)) return;
+      Store.dispatch(addRemark(new_remark));
+    });
+  }
+
+  componentWillUnmount() {
+    this.socket.close();
   }
 
   _onLoadRemarks(params) {

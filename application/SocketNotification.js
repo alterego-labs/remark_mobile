@@ -1,6 +1,3 @@
-import { addRemark } from './actions/Remarks';
-import Store from './Store';
-
 class SocketNotification {
   constructor() {
     this.socket = new WebSocket('ws://remark-api.alterego-labs.com/ws');
@@ -20,6 +17,10 @@ class SocketNotification {
     this.socket.onerror = function(error) {
       window.console.log('Error ' + error);
     }
+  }
+
+  close() {
+    this.socket.close();
   }
 }
 
