@@ -18,7 +18,15 @@ import RemarksListLayout from '../layouts/RemarksListLayout';
 
 import { RemarksApiGateway } from 'remark-api-client-node';
 
+import SocketNotification from '../SocketNotification';
+
 export default class RemarksList extends Component {
+  componentDidMount() {
+    if(this.props.showOnlyCurrentUserRemarks == false) {
+      SocketNotification.listen();
+    }
+  }
+
   _onLoadRemarks(params) {
     return RemarksApiGateway.getList(params, this.props.showOnlyCurrentUserRemarks ? this.props.currentUser.login : null);
   }
