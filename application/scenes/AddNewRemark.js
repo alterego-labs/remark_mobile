@@ -19,12 +19,14 @@ import { Map } from 'immutable';
 import Store, { dispatch } from '../Store';
 import { receiveAccessToken } from '../actions/Auth';
 
+import RemarksService from '../utils/remark_api/RemarksService';
+
 import LoginErrors from './shared/LoginErrors';
 
 class AddNewRemark extends InsideLayout {
   constructor(props) {
     super(props);
-    this.state = { viewState: 'form', errors: [] };
+    this.state = { viewState: 'form', errors: [], remarkBody: '' };
   }
 
   _onBackClick() {
@@ -33,6 +35,19 @@ class AddNewRemark extends InsideLayout {
 
   _onSaveClick(event) {
     this.setState({ viewState: 'loading', errors: [] });
+    let comp = this;
+    RemarksService.doCreate(
+      {
+        login: this.props.currentUser.login,
+        message: { body: this.state.remarkBody }
+      },
+      (success_data) => {
+        
+      },
+      (failure_data) => {
+        comp.setState({ errors: failure_data.errors, viewState: 'form' });
+      }
+    );
   }
 
   renderHeaderLeftButton() {
@@ -68,6 +83,7 @@ class AddNewRemark extends InsideLayout {
         <TextInput
           style={ styles.remarkBodyInput }
           multiline={ true }
+          onChangeText={ (text) => this.setState({remarkBody: text}) }
         />
         <TouchableHighlight style={ styles.saveBtn } onPress={ event => this._onSaveClick(event) }>
           <Text style={ styles.saveBtnText }>Save</Text>
