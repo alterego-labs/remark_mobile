@@ -18,6 +18,7 @@ import { Map } from 'immutable';
 
 import Store, { dispatch } from '../Store';
 import { receiveAccessToken } from '../actions/Auth';
+import { addRemark } from '../actions/Remarks';
 
 import RemarksService from '../utils/remark_api/RemarksService';
 
@@ -42,12 +43,15 @@ class AddNewRemark extends InsideLayout {
         message: { body: this.state.remarkBody }
       },
       (success_data) => {
-        
+        // Store.dispatch(addRemark(success_data.message));
+        comp._onBackClick();
       },
       (failure_data) => {
         comp.setState({ errors: failure_data.errors, viewState: 'form' });
       }
     );
+    event.preventDefault();
+    return false;
   }
 
   renderHeaderLeftButton() {
