@@ -19,8 +19,9 @@ export default class AppNavigator extends Component {
         break;
       case 'MyRemarksList':
         scene = <RemarksList navigator={ navigator } showOnlyCurrentUserRemarks={ true }/>;
+        break;
       case 'AddNewRemark':
-        scene = <AddNewRemark navigator={ navigator }/>;
+        scene = <AddNewRemark navigator={ navigator } showFooter={ false }/>;
         break;
     }
     return scene;

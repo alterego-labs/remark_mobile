@@ -86,6 +86,9 @@ class RemarksListLayout extends InsideLayout {
   }
 
   _onNewRemarkClick() {
+    this.props.navigator.push({
+      name: 'AddNewRemark'
+    });
   }
 
   renderRemark(remark) {
