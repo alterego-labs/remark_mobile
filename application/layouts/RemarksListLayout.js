@@ -85,6 +85,12 @@ class RemarksListLayout extends InsideLayout {
     });
   }
 
+  _onNewRemarkClick() {
+    this.props.navigator.push({
+      name: 'AddNewRemark'
+    });
+  }
+
   renderRemark(remark) {
     return (
       <RemarkListItem remark={ remark }/>
@@ -128,6 +134,14 @@ class RemarksListLayout extends InsideLayout {
     );
   }
 
+  renderHeaderLeftButton() {
+    return (
+      <TouchableHighlight onPress={ this._onNewRemarkClick.bind(this) } style={ styles.newRemarkTouch }>
+        <Image style={ styles.newRemarkImg } resizeMode='stretch' source={ require('../images/new_remark.png') }/>
+      </TouchableHighlight>
+    );
+  }
+
   renderHeaderRightButton() {
     return (
       <TouchableHighlight onPress={ this._onLogoutClick.bind(this) } style={ styles.logoutTouch }>
@@ -160,7 +174,27 @@ const styles = StyleSheet.create({
     top: 16,
     right: 5
   },
+  newRemarkTouch: {
+    position: 'absolute',
+    top: 16,
+    left: 5
+  },
+  newRemarkImg: {
+    height: 25,
+    width: 25,
+    opacity: 0.5
+  },
   logoutImg: {
+    height: 25,
+    width: 25,
+    opacity: 0.5
+  },
+  newRemarkTouch: {
+    position: 'absolute',
+    top: 16,
+    left: 5
+  },
+  newRemarkImg: {
     height: 25,
     width: 25,
     opacity: 0.5
