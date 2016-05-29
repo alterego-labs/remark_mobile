@@ -18,10 +18,10 @@ import Store, { dispatch } from '../Store';
 import { receiveAccessToken } from '../actions/Auth';
 
 class AddNewRemark extends Component {
-  render() {
-    return (
-    );
-  }
+  // render() {
+  //   return (
+  //   );
+  // }
 }
 
 export default AddNewRemark;
