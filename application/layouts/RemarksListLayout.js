@@ -1,5 +1,4 @@
 import React, {
-  AppRegistry,
   Component,
   StyleSheet,
   Text,
@@ -11,6 +10,8 @@ import React, {
   ListView
 } from 'react-native';
 
+import InsideLayout from './InsideLayout';
+
 import { connect } from 'react-redux';
 import Store, { dispatch } from '../Store';
 
@@ -20,7 +21,7 @@ import { cleanRemarks, loadRemarks, addRemarks } from '../actions/Remarks';
 import RemarkListItem from '../views/remarks/ListItem';
 import DotsSpinner from '../components/spinners/DotsSpinner';
 
-class RemarksListLayout extends Component {
+class RemarksListLayout extends InsideLayout {
   constructor(props) {
     super(props);
     this.state = {
@@ -100,72 +101,46 @@ class RemarksListLayout extends Component {
     });
   }
 
-  render() {
+  renderBody() {
     return (
-      <View style={ styles.topContainer }>
-        <View style={ styles.header }>
-          <TouchableHighlight onPress={ this._onNewRemarkClick.bind(this) } style={ styles.newRemarkTouch }>
-            <Image style={ styles.newRemarkImg } resizeMode='stretch' source={ require('../images/new_remark.png') }/>
-          </TouchableHighlight>
-          <Image style={ styles.headerLogo } resizeMode='stretch' source={ require('../images/logo.png') }/>
-          <TouchableHighlight onPress={ this._onLogoutClick.bind(this) } style={ styles.logoutTouch }>
-            <Image style={ styles.logoutImg } resizeMode='stretch' source={ require('../images/logout.png') }/>
-          </TouchableHighlight>
-        </View>
-        <View style={ styles.body }>
-          <ListView
-            dataSource={ this.state.dataSource }
-            renderRow={ this.renderRemark.bind(this) }
-            onEndReached={ event => this.onBottom(event) }
-            onEndReachedThreshold={ 100 }
-          />
-          <DotsSpinner show={ this.state.loading } />
-        </View>
-        <View style={ styles.footer }>
-          <TouchableHighlight onPress={ this._onGoToAllRemarksList.bind(this) } style={ [styles.footerButton, (this.props.activeFooterLink == 'home') && styles.footerButtonActive] }>
-            <Text style={ [styles.footerButtonText, (this.props.activeFooterLink == 'home') && styles.footerButtonTextActive] }>Home</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={ this._onGoToMyRemarksList.bind(this) } style={ [styles.footerButton, (this.props.activeFooterLink == 'my') && styles.footerButtonActive] }>
-            <Text style={ [styles.footerButtonText, (this.props.activeFooterLink == 'my') && styles.footerButtonTextActive] }>My</Text>
-          </TouchableHighlight>
-        </View>
-      </View>
+      [
+        <ListView
+          dataSource={ this.state.dataSource }
+          renderRow={ this.renderRemark.bind(this) }
+          onEndReached={ event => this.onBottom(event) }
+          onEndReachedThreshold={ 100 }
+          key="bodyListRemarks"
+        />
+        ,
+        <DotsSpinner key="bodyDotsSpinner" show={ this.state.loading } />
+      ]
+    );
+  }
+
+  renderFooter() {
+    return (
+      [
+        <TouchableHighlight key="footerHomeList" onPress={ this._onGoToAllRemarksList.bind(this) } style={ [styles.footerButton, (this.props.activeFooterLink == 'home') && styles.footerButtonActive] }>
+          <Text style={ [styles.footerButtonText, (this.props.activeFooterLink == 'home') && styles.footerButtonTextActive] }>Home</Text>
+        </TouchableHighlight>
+        ,
+        <TouchableHighlight key="footerMyList" onPress={ this._onGoToMyRemarksList.bind(this) } style={ [styles.footerButton, (this.props.activeFooterLink == 'my') && styles.footerButtonActive] }>
+          <Text style={ [styles.footerButtonText, (this.props.activeFooterLink == 'my') && styles.footerButtonTextActive] }>My</Text>
+        </TouchableHighlight>
+      ]
+    );
+  }
+
+  renderHeaderRightButton() {
+    return (
+      <TouchableHighlight onPress={ this._onLogoutClick.bind(this) } style={ styles.logoutTouch }>
+        <Image style={ styles.logoutImg } resizeMode='stretch' source={ require('../images/logout.png') }/>
+      </TouchableHighlight>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  topContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'stretch'
-  },
-  header: {
-    height: 60,
-    borderBottomColor: '#4589b0',
-    borderBottomWidth: 1,
-    alignSelf: 'stretch',
-    justifyContent: 'center',
-    alignItems: 'center',
-    // flexDirection: 'row'
-  },
-  body: {
-    alignSelf: 'stretch',
-    flex: 1
-  },
-  footer: {
-    height: 60,
-    borderTopColor: '#4589b0',
-    borderTopWidth: 1,
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-    alignItems: 'stretch'
-    
-  },
-  headerLogo: {
-    height: 35,
-    width: 20
-  },
   footerButton: {
     alignSelf: 'stretch',
     flex: 1,
