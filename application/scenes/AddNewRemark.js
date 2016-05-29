@@ -19,9 +19,20 @@ import { Map } from 'immutable';
 import Store, { dispatch } from '../Store';
 import { receiveAccessToken } from '../actions/Auth';
 
+import LoginErrors from './shared/LoginErrors';
+
 class AddNewRemark extends InsideLayout {
+  constructor(props) {
+    super(props);
+    this.state = { viewState: 'form', errors: [] };
+  }
+
   _onBackClick() {
     this.props.navigator.pop();
+  }
+
+  _onSaveClick(event) {
+    this.setState({ viewState: 'loading', errors: [] });
   }
 
   renderHeaderLeftButton() {
@@ -33,6 +44,24 @@ class AddNewRemark extends InsideLayout {
   }
 
   renderBody() {
+    if (this.state.viewState == 'form') {
+      return this._renderForm();
+    } else {
+      return (
+        <View style={ styles.loadingView }>
+          <Image style={ styles.loadingImg } source={ require('../images/loader_new_remark.gif') } />
+        </View>
+      );
+    }
+  }
+
+  _renderErrors() {
+    return (
+      <LoginErrors errors={ this.state.errors || [] }/>
+    );
+  }
+
+  _renderForm() {
     return (
       <View style={ styles.newRemarkForm }>
         <Text style={ styles.formCaption }>New remark:</Text>
@@ -40,9 +69,10 @@ class AddNewRemark extends InsideLayout {
           style={ styles.remarkBodyInput }
           multiline={ true }
         />
-        <TouchableHighlight style={ styles.saveBtn }>
+        <TouchableHighlight style={ styles.saveBtn } onPress={ event => this._onSaveClick(event) }>
           <Text style={ styles.saveBtnText }>Save</Text>
         </TouchableHighlight>
+        { this._renderErrors() }
       </View>
     );
   }
@@ -70,7 +100,7 @@ const styles = StyleSheet.create({
   },
   remarkBodyInput: {
     height: 200,
-    fontSize: 25,
+    fontSize: 15,
     borderColor: 'gray',
     borderWidth: 1,
     color: '#000',
@@ -93,6 +123,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 25,
     fontFamily: 'OpenSans-Semibold'
+  },
+  loadingView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1
+  },
+  loadingImg: {
+    alignSelf: 'center'
   }
 });
 
